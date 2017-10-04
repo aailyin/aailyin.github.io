@@ -1,0 +1,48 @@
+header {
+    z-index: 10;
+    position: relative;
+    background-color: #{$brown};
+    color: #{$white};
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    @include less480 {
+        font-size: 14px;
+    }
+    .nav-list ul {
+        margin: 0;
+        @include less480 {
+            display: none;
+        }
+        li a {
+            color: #{$white};
+        }
+        li:after {
+            content: '\007C';
+            padding-left: 10px;
+        }
+        li:last-child:after {
+            content: none;
+        }
+        li a:hover {
+            text-decoration: underline;
+            color: #{$yellow-light};
+            cursor: pointer;
+        }
+    }
+    .phone {
+        color: #{$yellow-medium};
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        @include less768 {
+            margin-top: 10px;
+            position: inherit;
+            float: none !important;
+        }
+        img {
+            width: 21px;
+        }
+    }
+}

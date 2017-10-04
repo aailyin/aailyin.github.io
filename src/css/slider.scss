@@ -1,0 +1,23 @@
+.slider-pager {
+    text-align: center;
+    margin-top: 20px;
+    @include less480 {
+        margin-top: 10px;
+    }
+    li {
+        list-style: none;
+        display: inline-block;
+        margin-right: 10px;
+        a {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 6px;
+            background-color: #{$gray};
+            text-indent: -9999px;
+            &:hover {
+                background-color: #{$dark-gray};
+            }
+        }
+    }
+}

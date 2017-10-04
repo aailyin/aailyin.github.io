@@ -1,0 +1,41 @@
+{
+  "name": "massage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --inline --hot",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/aailyin/massage-room.git"
+  },
+  "author": "Anton-Aliaksei Ilyin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/aailyin/massage-room/issues"
+  },
+  "homepage": "https://gitlab.com/aailyin/massage-room#README",
+  "dependencies": {
+    "file-loader": "^0.11.1",
+    "jquery": "^3.2.1",
+    "slippry": "^1.4.0",
+    "url-loader": "^0.5.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.1",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.5.3",
+    "resolve-url-loader": "^2.0.2",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.1",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}

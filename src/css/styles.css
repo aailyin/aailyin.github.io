@@ -1,0 +1,556 @@
+@import url(bootstrap.min.css);
+/**
+ *
+ * slippry v1.4.0 - Responsive content slider for jQuery
+ * http://slippry.com
+ *
+ * Authors: Lukas Jakob Hafner - @saftsaak
+ *          Thomas Hurd - @SeenNotHurd
+ *
+ * Copyright 2016, booncon oy - http://booncon.com
+ *
+ *
+ * Released under the MIT license - http://opensource.org/licenses/MIT
+ */
+/* kenBurns animations, very basic */
+@import url(../lightbox2/css/lightbox.css);
+@keyframes left-right {
+  0% {
+    transform: translateY(-20%) translateX(-10%); }
+  100% {
+    transform: translateY(0%) translateX(10%); } }
+
+@keyframes right-left {
+  0% {
+    transform: translateY(0%) translateX(10%); }
+  100% {
+    transform: translateY(-20%) translateX(-10%); } }
+
+/* added to the original element calling slippry */
+.sy-box.sy-loading {
+  background: url("../images/sy-loader.gif") 50% 50% no-repeat;
+  background-size: 32px;
+  min-height: 40px; }
+  .sy-box.sy-loading .sy-slides-wrap, .sy-box.sy-loading .sy-pager {
+    visibility: hidden; }
+
+/* element that wraps the slides */
+.sy-slides-wrap {
+  position: relative;
+  height: 100%;
+  width: 100%; }
+  .sy-slides-wrap:hover .sy-controls {
+    display: block; }
+
+/* element that crops the visible area to the slides */
+.sy-slides-crop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden; }
+
+/* list containing the slides */
+.sy-list {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute; }
+  .sy-list.horizontal {
+    transition: left ease; }
+  .sy-list.vertical {
+    transition: top ease; }
+
+/* single slide */
+.sy-slide {
+  position: absolute;
+  width: 100%;
+  z-index: 2; }
+  .sy-slide.kenburns {
+    width: 140%;
+    left: -20%; }
+    .sy-slide.kenburns.useCSS {
+      transition-property: opacity; }
+      .sy-slide.kenburns.useCSS.sy-ken:nth-child(1n) {
+        animation-name: left-right;
+        animation-fill-mode: forwards; }
+      .sy-slide.kenburns.useCSS.sy-ken:nth-child(2n) {
+        animation-name: right-left;
+        animation-fill-mode: forwards; }
+  .sy-slide.sy-active {
+    z-index: 3; }
+  .sy-slide > img {
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    border: 0; }
+  .sy-slide > a {
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%; }
+    .sy-slide > a > img {
+      margin: 0;
+      padding: 0;
+      display: block;
+      width: 100%;
+      border: 0; }
+
+/* next/ prev buttons, with arrows and clickable area a lot larger than the visible buttons */
+.sy-controls {
+  display: none;
+  list-style: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 0;
+  margin: 0; }
+  .sy-controls li {
+    position: absolute;
+    width: 10%;
+    min-width: 4.2em;
+    height: 100%;
+    z-index: 33; }
+    .sy-controls li.sy-prev {
+      left: 0;
+      top: 0; }
+      .sy-controls li.sy-prev a:after {
+        background-position: -5% 0; }
+    .sy-controls li.sy-next {
+      right: 0;
+      top: 0; }
+      .sy-controls li.sy-next a:after {
+        background-position: 105% 0; }
+    .sy-controls li a {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: block;
+      text-indent: -9999px; }
+      .sy-controls li a:link, .sy-controls li a:visited {
+        opacity: 0.4; }
+      .sy-controls li a:hover, .sy-controls li a:focus {
+        opacity: 0.8;
+        outline: none; }
+      .sy-controls li a:after {
+        content: "";
+        background-image: url("../images/arrows.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: center;
+        text-indent: 0;
+        line-height: 2.8em;
+        color: #111;
+        font-weight: 800;
+        position: absolute;
+        background-color: #fff;
+        width: 2.8em;
+        height: 2.8em;
+        left: 50%;
+        top: 50%;
+        margin-top: -1.4em;
+        margin-left: -1.4em;
+        border-radius: 50%; }
+  @media only screen and (max-device-width: 600px) {
+    .sy-controls {
+      display: block; }
+      .sy-controls li {
+        min-width: 2.1em; }
+        .sy-controls li a:after {
+          width: 1.4em;
+          height: 1.4em;
+          margin-top: -0.7em;
+          margin-left: -0.7em; } }
+
+/* captions, styled fo the overlay variant */
+.sy-caption-wrap {
+  position: absolute;
+  bottom: 2em;
+  z-index: 12;
+  left: 50%; }
+  .sy-caption-wrap .sy-caption {
+    position: relative;
+    left: -50%;
+    background-color: rgba(0, 0, 0, 0.54);
+    color: #fff;
+    padding: 0.4em 1em;
+    border-radius: 1.2em; }
+    .sy-caption-wrap .sy-caption a:link, .sy-caption-wrap .sy-caption a:visited {
+      color: #e24b70;
+      font-weight: 600;
+      text-decoration: none; }
+    .sy-caption-wrap .sy-caption a:hover, .sy-caption-wrap .sy-caption a:focus {
+      text-decoration: underline; }
+  @media only screen and (max-device-width: 600px), screen and (max-width: 600px) {
+    .sy-caption-wrap {
+      left: 0;
+      bottom: 0.4em; }
+      .sy-caption-wrap .sy-caption {
+        left: 0;
+        padding: 0.2em 0.4em;
+        font-size: 0.92em;
+        border-radius: 0; } }
+
+/* pager bubbles */
+.sy-pager {
+  clear: both;
+  display: block;
+  width: 100%;
+  margin: 1em 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: center; }
+  .sy-pager li {
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0 1em 0 0;
+    border-radius: 50%; }
+    .sy-pager li.sy-active a {
+      background-color: #e24b70; }
+    .sy-pager li a {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background-color: #ccc;
+      text-indent: -9999px;
+      background-size: 2em;
+      border-radius: 50%; }
+      .sy-pager li a:link, .sy-pager li a:visited {
+        opacity: 1.0; }
+      .sy-pager li a:hover, .sy-pager li a:focus {
+        opacity: 0.6; }
+
+/* element to "keep/ fill" the space of the content, gets intrinsic height via js */
+.sy-filler {
+  width: 100%; }
+  .sy-filler.ready {
+    transition: padding 600ms ease; }
+
+* {
+  margin: 0; }
+
+html, body {
+  height: 100%; }
+
+body {
+  display: none;
+  font-size: 16px;
+  font-family: 'PT Serif', sans-serif;
+  background-color: #EEE; }
+
+.container {
+  background-color: #FFF;
+  box-shadow: 0 0 10px 1px #CCC;
+  min-height: 100%;
+  height: auto !important;
+  padding: 0;
+  z-index: 1; }
+
+header {
+  z-index: 10;
+  position: relative;
+  background-color: #978468;
+  color: #FFF;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 15px; }
+  @media (max-width: 479px) {
+    header {
+      font-size: 14px; } }
+  header .nav-list ul {
+    margin: 0; }
+    @media (max-width: 479px) {
+      header .nav-list ul {
+        display: none; } }
+    header .nav-list ul li a {
+      color: #FFF; }
+    header .nav-list ul li:after {
+      content: '\007C';
+      padding-left: 10px; }
+    header .nav-list ul li:last-child:after {
+      content: none; }
+    header .nav-list ul li a:hover {
+      text-decoration: underline;
+      color: #F7F5D1;
+      cursor: pointer; }
+  header .phone {
+    color: #F6E7AE;
+    position: absolute;
+    right: 15px;
+    top: 15px; }
+    @media (max-width: 767px) {
+      header .phone {
+        margin-top: 10px;
+        position: inherit;
+        float: none !important; } }
+    header .phone img {
+      width: 21px; }
+
+.title {
+  color: #FFF;
+  position: absolute;
+  text-align: center;
+  font-family: 'Pattaya';
+  z-index: 1000;
+  width: 100%;
+  margin-top: -25%; }
+  @media (max-width: 479px) {
+    .title {
+      margin-top: -32%; } }
+  .title img {
+    width: 90px; }
+    @media (max-width: 767px) {
+      .title img {
+        width: 35px; } }
+  .title h3 {
+    font-size: 42px;
+    text-shadow: #000 4px 4px 8px; }
+    @media (max-width: 767px) {
+      .title h3 {
+        font-size: 28px; } }
+    @media (max-width: 479px) {
+      .title h3 {
+        font-size: 24px; } }
+  .title h4 {
+    font-family: 'PT Serif', sans-serif; }
+    @media (max-width: 479px) {
+      .title h4 {
+        display: none; } }
+    @media (max-width: 767px) {
+      .title h4 {
+        font-size: 14px; } }
+
+.background-image {
+  padding-top: 36.8421%;
+  width: 100%;
+  opacity: .9;
+  position: relative;
+  height: 0;
+  background: url("../images/massage3.jpg") no-repeat center center;
+  background-size: 100%; }
+
+.mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-color: #000;
+  opacity: .4; }
+
+.slider-pager {
+  text-align: center;
+  margin-top: 20px; }
+  @media (max-width: 479px) {
+    .slider-pager {
+      margin-top: 10px; } }
+  .slider-pager li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px; }
+    .slider-pager li a {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background-color: #CCC;
+      text-indent: -9999px; }
+      .slider-pager li a:hover {
+        background-color: #AAA; }
+
+.service-info {
+  margin-top: 40px;
+  padding: 40px 15px;
+  background-color: #92CDB6; }
+  @media (max-width: 479px) {
+    .service-info {
+      padding: 20px 15px;
+      margin-top: 20px; } }
+  .service-info h3 {
+    text-align: center;
+    font-family: 'Pattaya'; }
+  .service-info .info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px; }
+    @media (max-width: 479px) {
+      .service-info .info-cards {
+        margin-top: 20px; } }
+    .service-info .info-cards .card-wrap {
+      padding: 20px;
+      flex-basis: 0;
+      flex-grow: 1; }
+      @media (max-width: 991px) {
+        .service-info .info-cards .card-wrap {
+          padding: 5px; } }
+      .service-info .info-cards .card-wrap .card {
+        background-color: #FFF;
+        padding: 20px;
+        text-align: center;
+        height: 100%;
+        font-size: 14px; }
+        @media (max-width: 991px) {
+          .service-info .info-cards .card-wrap .card {
+            padding: 10px; } }
+        .service-info .info-cards .card-wrap .card img {
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+          margin-bottom: 20px; }
+          @media (max-width: 991px) {
+            .service-info .info-cards .card-wrap .card img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50px; } }
+        @media (max-width: 991px) {
+          .service-info .info-cards .card-wrap .card .card-info span {
+            display: none; }
+          .service-info .info-cards .card-wrap .card .card-info h4 {
+            font-size: 14px; } }
+        .service-info .info-cards .card-wrap .card .card-info h4 {
+          font-weight: bold; }
+
+.doctor-info {
+  padding: 40px 15px; }
+  .doctor-info h3 {
+    text-align: center;
+    font-family: 'Pattaya'; }
+  .doctor-info .details {
+    padding-top: 40px; }
+    @media (max-width: 767px) {
+      .doctor-info .details {
+        padding-top: 20px; } }
+    .doctor-info .details .photo {
+      padding-left: 60px; }
+      @media (max-width: 767px) {
+        .doctor-info .details .photo {
+          padding: 0;
+          text-align: center;
+          margin-bottom: 40px; } }
+      .doctor-info .details .photo img {
+        width: 250px;
+        height: 250px;
+        border-radius: 125px; }
+        @media (max-width: 1199px) {
+          .doctor-info .details .photo img {
+            width: 200px;
+            height: 200px;
+            border-radius: 100px; } }
+        @media (max-width: 991px) {
+          .doctor-info .details .photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 75px; } }
+        @media (max-width: 767px) {
+          .doctor-info .details .photo img {
+            width: 250px;
+            height: 250px;
+            border-radius: 125px; } }
+    .doctor-info .details .info {
+      padding-right: 60px; }
+      @media (max-width: 767px) {
+        .doctor-info .details .info {
+          padding: 0 30px; } }
+      .doctor-info .details .info .certificates {
+        padding-top: 40px; }
+        @media (max-width: 767px) {
+          .doctor-info .details .info .certificates {
+            padding-top: 20px;
+            text-align: center; } }
+        .doctor-info .details .info .certificates img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50px; }
+          @media (max-width: 991px) {
+            .doctor-info .details .info .certificates img {
+              width: 60px;
+              height: 60px;
+              border-radius: 30px; } }
+
+.gallery {
+  margin-top: 20px; }
+
+.contacts-info {
+  margin-top: 40px;
+  padding: 40px 15px 60px;
+  color: #FFF;
+  background-color: #2C9585; }
+  @media (max-width: 479px) {
+    .contacts-info {
+      padding: 20px 15px;
+      margin-top: 20px; } }
+  .contacts-info h3 {
+    text-align: center;
+    font-family: 'Pattaya'; }
+  .contacts-info .details {
+    margin-top: 60px; }
+    @media (max-width: 767px) {
+      .contacts-info .details {
+        margin-top: 40px;
+        text-align: center; } }
+  .contacts-info .address {
+    padding-left: 60px; }
+    @media (max-width: 767px) {
+      .contacts-info .address {
+        padding: 0;
+        margin-bottom: 20px; } }
+    @media (min-width: 768px) {
+      .contacts-info .address ul {
+        padding: 20px;
+        background-color: #FFF;
+        color: #000; }
+        .contacts-info .address ul li {
+          margin-bottom: 10px; }
+        .contacts-info .address ul li:last-child {
+          margin-bottom: 0; } }
+    .contacts-info .address .icon {
+      display: block;
+      width: 25px;
+      height: 25px;
+      margin-right: 10px; }
+      @media (max-width: 767px) {
+        .contacts-info .address .icon {
+          display: none; } }
+    .contacts-info .address .address-icon {
+      background: url("../images/address_icon_black.png") no-repeat center center;
+      background-size: contain; }
+    .contacts-info .address .phone-icon {
+      background: url("../images/phone_icon_black.png") no-repeat center center;
+      background-size: contain; }
+    .contacts-info .address .address-item {
+      display: flex; }
+      @media (max-width: 767px) {
+        .contacts-info .address .address-item {
+          display: block; }
+          .contacts-info .address .address-item ul {
+            padding: 20px; } }
+      .contacts-info .address .address-item ul {
+        padding: 0; }
+  .contacts-info .map .mobile {
+    display: none; }
+    @media (max-width: 479px) {
+      .contacts-info .map .mobile {
+        display: block; } }
+  .contacts-info .map .tablet {
+    display: none; }
+    @media (min-width: 480px) and (max-width: 1199px) {
+      .contacts-info .map .tablet {
+        display: block; } }
+  @media (max-width: 1199px) {
+    .contacts-info .map .desktop {
+      display: none; } }
+  .contacts-info .map iframe {
+    margin: 0 auto; }
+
+footer {
+  background-color: #978468;
+  width: 100%;
+  padding: 20px;
+  color: #FFF;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+  bottom: 0; }

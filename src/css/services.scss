@@ -1,0 +1,65 @@
+.service-info {
+    margin-top: 40px;
+    padding: 40px 15px;
+    background-color: #{$green-light};
+    @include less480 {
+        padding: 20px 15px;
+        margin-top: 20px;
+    }
+    h3 {
+        text-align: center;
+        font-family: 'Pattaya';
+    }
+    .info-cards {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 40px;
+        @include less480 {
+            margin-top: 20px;
+        }
+        .card-wrap {
+            padding: 20px;
+            @include less992 {
+                padding: 5px;
+            }
+            flex-basis: 0;
+            flex-grow: 1;
+            .card {
+                background-color: #{$white};
+                padding: 20px;
+                text-align: center;
+                height: 100%;
+                font-size: 14px;
+                @include less992 {
+                    padding: 10px;
+                }
+                img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 60px;
+                    margin-bottom: 20px;
+                    @include less992 {
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50px;
+                    }
+                }
+                .card-info {
+                    @include less992 {
+                        span { 
+                            display: none;
+                        }
+                        h4 {
+                            font-size: 14px;
+                        }
+                    }
+                    h4 {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+

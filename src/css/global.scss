@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: none;
+    font-size: 16px;
+    font-family: 'PT Serif', sans-serif;
+    background-color: #{$light-gray};
+}
+
+.container {
+    background-color: #{$white};
+    box-shadow: 0 0 10px 1px #{$gray};
+    min-height: 100%;
+    height: auto !important;
+    padding: 0;
+    z-index: 1;
+}

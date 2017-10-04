@@ -1,0 +1,77 @@
+@mixin from320to480 {
+    @media (min-width: #{$small-xs}) and (max-width: #{$small - 1px}) {
+        @content;
+    }
+}
+
+@mixin from320to768 {
+    @media (min-width: #{$small-xs}) and (max-width: #{$medium - 1px}) {
+        @content;
+    }
+}
+
+@mixin from320to992 {
+    @media (min-width: #{$small-xs}) and (max-width: #{$large - 1px}) {
+        @content;
+    }
+}
+
+@mixin from480to768 {
+    @media (min-width: #{$small}) and (max-width: #{$medium - 1px}) {
+        @content;
+    }
+}
+
+@mixin from480to992 {
+    @media (min-width: #{$small}) and (max-width: #{$large - 1px}) {
+        @content;
+    }
+}
+
+@mixin from480to1200 {
+    @media (min-width: #{$small}) and (max-width: #{$large-xs - 1px}) {
+        @content;
+    }
+}
+
+@mixin from768to992 {
+    @media (min-width: #{$medium}) and (max-width: #{$large - 1px}) {
+        @content;
+    }
+}
+
+@mixin less480 {
+    @media (max-width: #{$small - 1px}) {
+        @content;
+    }
+}
+
+@mixin less768 {
+    @media (max-width: #{$medium - 1px}) {
+        @content;
+    }
+}
+
+@mixin less992 {
+    @media (max-width: #{$large - 1px}) {
+        @content;
+    }
+}
+
+@mixin less1200 {
+    @media (max-width: #{$large-xs - 1px}) {
+        @content;
+    }
+}
+
+@mixin more768 {
+    @media (min-width: #{$medium}) {
+        @content;
+    }
+}
+
+@mixin more992 {
+    @media (min-width: #{$large}) {
+        @content;
+    }
+}

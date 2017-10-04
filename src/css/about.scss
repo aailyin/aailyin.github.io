@@ -1,0 +1,80 @@
+.doctor-info {
+    padding: 40px 15px;
+    h3 {
+        text-align: center;
+        font-family: 'Pattaya';
+    }
+    .details {
+        padding-top: 40px;
+
+        @include less768 {
+            padding-top: 20px;
+        }
+
+        .photo {
+            padding-left: 60px;
+
+            @include less768 {
+                padding: 0;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            img {
+                width: 250px;
+                height: 250px;
+                border-radius: 125px;
+
+                @include less1200 {
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 100px;
+                }
+
+                @include less992 {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 75px;
+                }
+
+                @include less768 {
+                    width: 250px;
+                    height: 250px;
+                    border-radius: 125px;
+                }
+            }
+        }
+
+        .info {
+            padding-right: 60px;
+
+            @include less768 {
+                padding: 0 30px;
+            }
+
+            .certificates {
+                padding-top: 40px;
+
+                @include less768 {
+                    padding-top: 20px;
+                    text-align: center;
+                }
+                img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+
+                    @include less992 {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.gallery {
+    margin-top: 20px;
+}
